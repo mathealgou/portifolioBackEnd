@@ -1,7 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import fs from "fs";
-import { connectToDatabase, findAllPosts } from "./databaseHandler.js";
+import {
+  connectToDatabase,
+  findAllPosts,
+  findOnePost,
+} from "./databaseHandler.js";
 
 dotenv.config();
 
@@ -14,13 +18,13 @@ app.get("/", async (req, res) => {
   if (req.query.post) {
     let responseText = "";
     try {
-      //Todo: refactor to read from database instead of file
-      responseText = fs.readFileSync(`./${req.query.post}.md`, "utf8");
-      res.send(responseText);
+      let response = await findOnePost(req.query.post);
+      res.status(200).send(response);
     } catch (e) {
       res.status(404).send("Not found");
     }
   } else {
+    //Todo wrap in try catch
     let allPosts = await findAllPosts();
     console.log("bbbb", allPosts);
     res.send(allPosts);
