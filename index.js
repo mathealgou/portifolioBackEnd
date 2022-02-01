@@ -25,9 +25,12 @@ app.get("/", async (req, res) => {
     }
   } else {
     //Todo wrap in try catch
-    let allPosts = await findAllPosts();
-    console.log("bbbb", allPosts);
-    res.send(allPosts);
+    try {
+      let allPosts = await findAllPosts();
+      res.send(allPosts);
+    } catch (e) {
+      res.status(404).send("Not found");
+    }
   }
 });
 
