@@ -1,12 +1,25 @@
 import express from "express";
+import dotenv from "dotenv";
+import fs from "fs";
+import { connectToDatabase } from "./databaseHandler.js";
 
-const port = process.env.PORT || 3000;
+dotenv.config();
 
-// Create a new express application instance
+const port = process.env.port;
 const app = express();
 
+await connectToDatabase();
+
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  if (req.query.post) {
+    let responseText = "";
+    try {
+      responseText = fs.readFileSync(`./${req.query.post}.md`, "utf8");
+      res.send(responseText);
+    } catch (e) {
+      res.status(404).send("Not found");
+    }
+  }
 });
 
 app.listen(port, () => {
