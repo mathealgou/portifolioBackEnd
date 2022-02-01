@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import fs from "fs";
 import {
   connectToDatabase,
   findAllPosts,
@@ -16,7 +15,6 @@ await connectToDatabase();
 
 app.get("/", async (req, res) => {
   if (req.query.post) {
-    let responseText = "";
     try {
       let response = await findOnePost(req.query.post);
       res.status(200).send(response);
@@ -24,7 +22,6 @@ app.get("/", async (req, res) => {
       res.status(404).send("Not found");
     }
   } else {
-    //Todo wrap in try catch
     try {
       let allPosts = await findAllPosts();
       res.send(allPosts);
