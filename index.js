@@ -5,6 +5,7 @@ import {
   findAllPosts,
   findOnePost,
 } from "./databaseHandler.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -12,6 +13,12 @@ const port = process.env.port;
 const app = express();
 
 await connectToDatabase();
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.get("/", async (req, res) => {
   //In case there's a query string, we'll use that as the title
