@@ -14,6 +14,8 @@ const app = express();
 await connectToDatabase();
 
 app.get("/", async (req, res) => {
+  //In case there's a query string, we'll use that as the title
+  //to search for a post.
   if (req.query.post) {
     try {
       let response = await findOnePost(req.query.post);
@@ -21,7 +23,9 @@ app.get("/", async (req, res) => {
     } catch (e) {
       res.status(404).send("Not found");
     }
-  } else {
+  }
+  //Otherwise, we'll just send all the posts.
+  else {
     try {
       let allPosts = await findAllPosts();
       res.send(allPosts);
