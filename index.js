@@ -9,7 +9,7 @@ import cors from "cors";
 
 dotenv.config();
 
-const port = process.env.port;
+const port = process.env.PORT;
 const app = express();
 
 await connectToDatabase();
