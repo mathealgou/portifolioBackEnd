@@ -30,7 +30,7 @@ export async function findAllPosts() {
       if (err) {
         console.log(err);
       } else {
-        console.log(response);
+        console.log("Found all posts");
       }
     })
     .clone();
@@ -45,7 +45,7 @@ export async function findOnePost(title) {
       if (err) {
         console.log(err);
       } else {
-        console.log(response);
+        console.log("found one post");
       }
     })
     .clone()
